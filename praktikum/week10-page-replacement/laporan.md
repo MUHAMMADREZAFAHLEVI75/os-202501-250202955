@@ -98,9 +98,10 @@ Pemilihan algoritma page replacement bertujuan untuk meningkatkan kinerja sistem
 ---
 
 ## Hasil Eksekusi
+![WhatsApp Image 2025-12-28 at 15 48 56](https://github.com/user-attachments/assets/69124aa2-6e1c-4aa6-a012-77f333f0245c)
+![WhatsApp Image 2025-12-28 at 15 46 41](https://github.com/user-attachments/assets/09cb8548-345a-49d0-bf2f-4433701ea575)
 
-<img width="1919" height="1199" alt="Screenshot 2025-12-27 170225" src="https://github.com/user-attachments/assets/cd22bc70-e08e-4011-b885-db882953c7f9" />
-<img width="1919" height="1199" alt="Screenshot 2025-12-27 170335" src="https://github.com/user-attachments/assets/877fde17-2f29-431f-9718-c70a133912f5" />
+
 
 ---
 
