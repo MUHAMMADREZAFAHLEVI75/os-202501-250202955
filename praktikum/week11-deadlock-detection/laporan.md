@@ -1,186 +1,183 @@
+# Laporan Praktikum Minggu 11
 
-# Laporan Praktikum Minggu [X]
-Topik: [Tuliskan judul topik, misalnya "Arsitektur Sistem Operasi dan Kernel"]
+Topik: Simulasi dan Deteksi Deadlock
 
 ---
 
 ## Identitas
-- **Nama**  : [Nama Mahasiswa]  
-- **NIM**   : [NIM Mahasiswa]  
-- **Kelas** : [Kelas]
+
+* **Nama**  : Muhammad Reza Fahlevi
+* **NIM**   : 250202955
+* **Kelas** : 1IKRA
 
 ---
 
-## Tujuan
-Setelah menyelesaikan tugas ini, mahasiswa mampu:
+## A. Pendahuluan
 
-Membuat program sederhana untuk mendeteksi deadlock.
-Menjalankan simulasi deteksi deadlock dengan dataset uji.
-Menyajikan hasil analisis deadlock dalam bentuk tabel.
-Memberikan interpretasi hasil uji secara logis dan sistematis.
-Menyusun laporan praktikum sesuai format yang ditentukan
+Deadlock merupakan kondisi pada sistem operasi di mana dua atau lebih proses saling menunggu sumber daya yang sedang dipegang oleh proses lain, sehingga tidak ada satu pun proses yang dapat melanjutkan eksekusinya. Pada praktikum ini dilakukan simulasi dan **deteksi deadlock**, yaitu pendekatan yang membiarkan deadlock terjadi lalu mendeteksinya menggunakan algoritma tertentu.
 
 ---
 
-## Dasar Teori
-mahasiswa akan mempelajari mekanisme deteksi deadlock dalam sistem operasi.
-Berbeda dengan Minggu 7 yang berfokus pada pencegahan dan penghindaran deadlock, pada minggu ini mahasiswa diarahkan untuk mendeteksi deadlock yang telah terjadi menggunakan pendekatan algoritmik.
+## B. Tujuan Praktikum
+
+1. Mengimplementasikan algoritma deteksi deadlock.
+2. Menjalankan simulasi menggunakan dataset uji.
+3. Menentukan proses yang terlibat deadlock.
+4. Menganalisis hasil deteksi berdasarkan teori deadlock.
 
 ---
 
-## Langkah Praktikum
-Bahasa pemrograman bebas (Python / C / Java / lainnya).
-Program berbasis terminal, tidak memerlukan GUI.
-Fokus penilaian pada logika algoritma deteksi deadlock, bukan kompleksitas bahasa.
+## C. Dataset Uji
+
+Dataset disimpan dalam file `dataset_deadlock.csv` dengan format berikut:
+
+| Proses | Allocation | Request |
+| ------ | ---------- | ------- |
+| P1     | R1         | R2      |
+| P2     | R2         | R3      |
+| P3     | R3         | R1      |
+
+Dataset ini membentuk *circular wait* antar proses.
 
 ---
 
-## Kode / Perintah
-Tuliskan potongan kode atau perintah utama:
-```bash
-git add .
-git commit -m "Minggu 11 - Deadlock Detection"
-git push origin main
+## D. Algoritma Deteksi Deadlock
+
+Pendekatan yang digunakan adalah **Resource Allocation Graph (RAG)**.
+
+### Langkah Algoritma:
+
+1. Membaca data proses, resource allocation, dan request.
+2. Membentuk graf ketergantungan proses.
+3. Mendeteksi adanya siklus (*cycle*) pada graf.
+4. Jika terdapat siklus, maka proses dalam siklus tersebut berada dalam kondisi deadlock.
+
+---
+
+## E. Implementasi Program
+
+Bahasa pemrograman yang digunakan adalah **Python**.
+
+```python
+# deadlock_detection.py
+import csv
+from collections import defaultdict
+
+# Membaca dataset
+allocation = {}
+request = {}
+processes = []
+
+with open('dataset_deadlock.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        p = row['Proses']
+        processes.append(p)
+        allocation[p] = row['Allocation']
+        request[p] = row['Request']
+
+# Membentuk graph ketergantungan proses
+graph = defaultdict(list)
+
+for p1 in processes:
+    for p2 in processes:
+        if allocation[p1] == request[p2]:
+            graph[p2].append(p1)
+
+# Deteksi cycle dengan DFS
+visited = set()
+rec_stack = set()
+deadlocked = set()
+
+def dfs(p):
+    visited.add(p)
+    rec_stack.add(p)
+
+    for neighbor in graph[p]:
+        if neighbor not in visited:
+            dfs(neighbor)
+        elif neighbor in rec_stack:
+            deadlocked.update(rec_stack)
+
+    rec_stack.remove(p)
+
+for p in processes:
+    if p not in visited:
+        dfs(p)
+
+# Output hasil
+print("Hasil Deteksi Deadlock:")
+if deadlocked:
+    print("Deadlock terdeteksi pada proses:", ', '.join(deadlocked))
+else:
+    print("Tidak terjadi deadlock")
 ```
 
 ---
 
-## Hasil Eksekusi
-Sertakan screenshot hasil percobaan atau diagram:
-![Screenshot hasil](screenshots/example.png)
+## F. Hasil Eksekusi
+
+hasil screenshot eksekusi:
+<img width="1918" height="1018" alt="12121" src="https://github.com/user-attachments/assets/23437408-ed71-4b5a-b278-aa63b91d0387" />
+
+
+Berdasarkan hasil eksekusi program:
+
+| Proses | Status   |
+| ------ | -------- |
+| P1     | Deadlock |
+| P2     | Deadlock |
+| P3     | Deadlock |
+
+Semua proses terlibat dalam kondisi deadlock.
 
 ---
 
-## Analisis
-Apa perbedaan antara deadlock prevention, avoidance, dan detection?
-Mengapa deteksi deadlock tetap diperlukan dalam sistem operasi?
-Apa kelebihan dan kekurangan pendekatan deteksi deadlock?
+## G. Analisis
+
+Deadlock terjadi karena keempat kondisi deadlock terpenuhi:
+
+1. **Mutual Exclusion** – Resource hanya dapat digunakan satu proses.
+2. **Hold and Wait** – Proses memegang satu resource sambil menunggu resource lain.
+3. **No Preemption** – Resource tidak dapat diambil paksa.
+4. **Circular Wait** – Terjadi siklus P1 → P2 → P3 → P1.
 
 ---
 
-## Kesimpulan
-Tuliskan 2–3 poin kesimpulan dari praktikum ini.
+## H. Quiz
+
+### 1. Perbedaan deadlock prevention, avoidance, dan detection
+
+* **Prevention**: Mencegah deadlock dengan menghilangkan salah satu dari empat kondisi deadlock.
+* **Avoidance**: Menghindari deadlock dengan memastikan sistem selalu berada dalam *safe state*.
+* **Detection**: Membiarkan deadlock terjadi lalu mendeteksinya menggunakan algoritma.
+
+### 2. Mengapa deteksi deadlock tetap diperlukan?
+
+Karena pencegahan dan penghindaran deadlock tidak selalu efisien atau memungkinkan, terutama pada sistem kompleks dan dinamis.
+
+### 3. Kelebihan dan kekurangan deteksi deadlock
+
+**Kelebihan:**
+
+* Lebih fleksibel.
+* Tidak membatasi alokasi resource secara ketat.
+
+**Kekurangan:**
+
+* Deadlock sudah terlanjur terjadi.
+* Membutuhkan mekanisme recovery tambahan.
 
 ---
 
-## Quiz
-1.Apa perbedaan antara deadlock prevention, avoidance, dan detection?
-1. Deadlock Prevention (Pencegahan Deadlock)
-Konsep
-Deadlock dicegah sejak awal dengan cara menghilangkan minimal satu dari empat kondisi deadlock.
-Empat kondisi deadlock:
-Mutual Exclusion
-Hold and Wait
-No Preemption
-Circular Wait
+## I. Kesimpulan
 
-Cara kerja
-Sistem menerapkan aturan ketat, misalnya:
-Proses harus meminta semua resource sekaligus
-Resource boleh direbut paksa (preemption)
-Penomoran resource untuk mencegah circular wait
-
-Kelebihan
- Deadlock tidak mungkin terjadi
-
-Kekurangan
-Utilisasi resource rendah
-Sistem menjadi tidak fleksibel
-
-Contoh
-Proses wajib meminta semua resource di awal, jika tidak tersedia → proses menunggu
-
-2. Deadlock Avoidance (Penghindaran Deadlock)
-Konsep
-Sistem menghindari kondisi tidak aman (unsafe state) dengan menganalisis permintaan resource sebelum diberikan.
-
-Cara kerja
-Sistem mengecek apakah alokasi resource aman
-Menggunakan algoritma seperti Banker’s Algorithm
-
-Kelebihan
-Utilisasi resource lebih baik daripada prevention
-Deadlock tetap bisa dihindari
-
-Kekurangan
-Perlu informasi lengkap kebutuhan resource di awal
-Perhitungan lebih kompleks
-
-Contoh
-Banker’s Algorithm memastikan sistem tetap dalam safe state sebelum memberi resource
-
-3. Deadlock Detection (Deteksi Deadlock)
-Konsep
-Sistem membiarkan deadlock terjadi, lalu mendeteksinya dan melakukan pemulihan.
-
-Cara kerja
-Sistem secara berkala menjalankan algoritma deteksi deadlock
-Jika deadlock ditemukan → proses dihentikan atau resource direbut
-
-Kelebihan
-Lebih fleksibel
-Utilisasi resource tinggi
-
-Kekurangan
-Deadlock bisa terjadi
-Perlu mekanisme recovery (terminasi proses, rollback)
-
-Contoh
-Sistem memeriksa wait-for graph untuk menemukan siklus (deadlock)**  
-2. Mengapa deteksi deadlock tetap diperlukan dalam sistem operasi?  
-   **Alasan Deteksi Deadlock Tetap Diperlukan
-1. Pencegahan dan Penghindaran Tidak Selalu Praktis
-Deadlock prevention terlalu ketat → menurunkan performa sistem
-Deadlock avoidance butuh informasi lengkap kebutuhan resource di awal, yang sering tidak realistis
-
-Akibatnya, sistem nyata tidak selalu menggunakan dua pendekatan tersebut
-
-2. Deadlock Bisa Terjadi pada Sistem Kompleks
-Pada sistem modern:
-Banyak proses berjalan bersamaan
-Resource bersifat dinamis
-Interaksi antar proses sulit diprediksi
-
-Deadlock bisa terjadi tanpa disadari, sehingga harus dideteksi
-
-3. Meningkatkan Utilisasi Resource
-Dengan deteksi deadlock:
-Sistem tidak membatasi alokasi resource secara berlebihan
-Resource bisa digunakan semaksimal mungkin
-
-Lebih efisien dibanding prevention
-
-4. Deadlock Tidak Selalu Merugikan Jika Bisa Ditangani
-
-Deadlock bisa jarang terjadi
-Lebih murah membiarkan deadlock lalu memperbaikinya daripada mencegahnya terus-menerus
-
-Pendekatan ini sering dipakai pada sistem besar
-
-5. Memberi Mekanisme Pemulihan (Recovery)
-Setelah deadlock terdeteksi, sistem bisa:
-Menghentikan satu atau lebih proses
-Melakukan rollback
-Merebut kembali resource
-
-Sistem bisa kembali berjalan normal:**  
-3. Apa kelebihan dan kekurangan pendekatan deteksi deadlock? 
-   | Kelebihan                   | Kekurangan             |
-| --------------------------- | ---------------------- |
-| Resource digunakan maksimal | Deadlock bisa terjadi  |
-| Sistem fleksibel            | Perlu recovery         |
-| Tidak butuh info awal       | Overhead deteksi       |
-| Cocok sistem besar          | Risiko kehilangan data |
-
+Program simulasi berhasil mendeteksi deadlock menggunakan pendekatan graf dan pendeteksian siklus. Dataset uji menunjukkan kondisi deadlock yang valid sesuai teori sistem operasi.
 
 ---
 
-## Refleksi Diri
-Tuliskan secara singkat:
-- Apa bagian yang paling menantang minggu ini?  
-- Bagaimana cara Anda mengatasinya?  
+## Referensi
 
----
-
-**Credit:**  
-_Template laporan praktikum Sistem Operasi (SO-202501) – Universitas Putra Bangsa_
+1. Silberschatz et al., *Operating System Concepts*, 10th Edition
+2. Tanenbaum, *Modern Operating Systems*, 4th Edition
+3. OSTEP – Deadlock Detection
