@@ -1,13 +1,13 @@
 
-# Laporan Praktikum Minggu [X]
-Topik: [Tuliskan judul topik, misalnya "Arsitektur Sistem Operasi dan Kernel"]
+# Laporan Praktikum Minggu [13]
+Topik: '
 
 ---
 
 ## Identitas
-- **Nama**  : [Nama Mahasiswa]  
-- **NIM**   : [NIM Mahasiswa]  
-- **Kelas** : [Kelas]
+- **Nama**  : muhammad reza fahlevi 
+- **NIM**   : 250202955
+- **Kelas** : 1 IKRA
 
 ---
 
