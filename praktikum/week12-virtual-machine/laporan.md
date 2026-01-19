@@ -51,7 +51,8 @@ Praktikum ini bertujuan untuk memahami hubungan antara **host OS**, **guest OS**
 2. Melakukan proses instalasi hingga selesai.
 3. Mengaktifkan fitur virtualisasi (VT-x / AMD-V) melalui BIOS.
 
-*(Screenshot: instalasi_vm.png)*
+<img width="1920" height="1080" alt="Screenshot 2026-01-14 234158" src="https://github.com/user-attachments/assets/929e684a-983d-422d-a445-b219f48556e4" />
+
 
 ---
 
@@ -69,7 +70,11 @@ Praktikum ini bertujuan untuk memahami hubungan antara **host OS**, **guest OS**
    * RAM: 8048 MB
    * Storage: 50 GB (nvme)
 
-*(Screenshot: konfigurasi_resource.png)*
+<img width="1900" height="1047" alt="Screenshot 2026-01-15 001158" src="https://github.com/user-attachments/assets/4edfcdb8-d14c-4a3c-9412-168d8a68d099" />
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 001101" src="https://github.com/user-attachments/assets/f26aca65-3f9e-45bc-ac47-1e63e12b862a" />
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 001115" src="https://github.com/user-attachments/assets/2c1ad9eb-c9df-4095-8608-21601f0c9b32" />
+<img width="1906" height="1076" alt="Screenshot 2026-01-15 001145" src="https://github.com/user-attachments/assets/e938f9ab-14c1-41de-9b89-53d6665a3661" />
+
 
 ---
 
@@ -80,7 +85,13 @@ Praktikum ini bertujuan untuk memahami hubungan antara **host OS**, **guest OS**
 3. Mengikuti langkah instalasi hingga selesai.
 4. Melakukan login dan memastikan OS berjalan normal.
 
-*(Screenshot: os_guest_running.png)*
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 001430" src="https://github.com/user-attachments/assets/af59ec04-e3b4-4a41-88f3-2ca1c4dbbb7f" />
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 001555" src="https://github.com/user-attachments/assets/3d9d84fd-41fb-4688-ad95-222424ec55c2" />
+<img width="1891" height="1065" alt="Screenshot 2026-01-15 001715" src="https://github.com/user-attachments/assets/dba98ca0-190b-4615-8246-1010c8efa4ed" />
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 001805" src="https://github.com/user-attachments/assets/ec2069d7-74ad-48dc-a0f2-e63ba89b70e0" />
+<img width="1901" height="1067" alt="Screenshot 2026-01-15 002030" src="https://github.com/user-attachments/assets/b59c17e1-cecc-46eb-9dc5-ad2ac8afcedc" />
+<img width="1909" height="1074" alt="Screenshot 2026-01-15 002436" src="https://github.com/user-attachments/assets/4fb22d23-775d-4245-8f1d-1fa1d6270334" />
+
 
 ---
 
@@ -91,6 +102,11 @@ Praktikum ini bertujuan untuk memahami hubungan antara **host OS**, **guest OS**
 
 **Hasil Pengamatan:**
 Setelah resource ditingkatkan, performa VM menjadi lebih responsif, proses booting lebih cepat, dan aplikasi berjalan lebih lancar.
+
+<img width="1907" height="1074" alt="Screenshot 2026-01-15 002639" src="https://github.com/user-attachments/assets/437b1d17-fe79-4aa9-90f6-b170ebf570ef" />
+<img width="1864" height="1044" alt="Screenshot 2026-01-15 004103" src="https://github.com/user-attachments/assets/13dce7cb-3a43-4a59-b849-872773d8a995" />
+<img width="1903" height="1069" alt="Screenshot 2026-01-15 004227" src="https://github.com/user-attachments/assets/b8678e5a-3eea-4302-b0f0-7847288ab559" />
+
 
 ---
 
